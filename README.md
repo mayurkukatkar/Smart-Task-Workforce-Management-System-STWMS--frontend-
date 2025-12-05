@@ -80,7 +80,17 @@ Designed with a **mobile-first approach**, the application ensures a consistent 
 
 ## 📸 Screenshots
 
-*(Add screenshots of Dashboard, Task Board, and Analytics page here)*
+### 📊 Interactive Dashboard
+![Dashboard Overview](screenshots/dashboard-overview.png)
+
+### 📈 Analytics & Insights
+![Analytics Page](screenshots/analytics-page.png)
+
+### 👥 Admin Management
+![Admin Dashboard](screenshots/admin-dashboard.png)
+
+### 🔐 Secure Login
+![Login Page](screenshots/login-page.png)
 
 ## 🤝 Contributing
 
