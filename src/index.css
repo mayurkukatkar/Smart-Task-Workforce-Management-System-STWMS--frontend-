@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+/* Custom Global Styles override or extension */
+:root {
+  --font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+body {
+  font-family: var(--font-family);
+}
