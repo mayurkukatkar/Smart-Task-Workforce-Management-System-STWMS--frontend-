@@ -103,8 +103,8 @@ const TaskBoard = () => {
                     ))}
                 </div>
             ) : (
-                <div className="card overflow-hidden">
-                    <table className="w-full text-left text-sm">
+                <div className="card overflow-hidden overflow-x-auto">
+                    <table className="w-full text-left text-sm min-w-[600px]">
                         <thead className="bg-slate-50 border-b border-slate-200">
                             <tr>
                                 <th className="px-6 py-3 font-medium text-slate-500">Task</th>

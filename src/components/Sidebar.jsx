@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { LayoutDashboard, CheckSquare, Users, BarChart3, Settings, FileText } from 'lucide-react';
+import { LayoutDashboard, CheckSquare, Users, BarChart3, Settings, FileText, X } from 'lucide-react';
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, onClose }) => {
     const { user } = useAuth();
     const location = useLocation();
 
@@ -30,50 +30,66 @@ const Sidebar = () => {
     };
 
     return (
-        <aside className="w-64 bg-slate-900 text-white flex flex-col h-screen sticky top-0">
-            <div className="p-6 border-b border-slate-800">
-                <h1 className="text-xl font-bold flex items-center gap-2">
-                    <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">S</div>
-                    STWMS
-                </h1>
-            </div>
+        <>
+            {/* Mobile Overlay */}
+            {isOpen && (
+                <div
+                    className="fixed inset-0 bg-black/50 z-20 md:hidden"
+                    onClick={onClose}
+                />
+            )}
 
-            <div className="flex-1 px-4 py-6 overflow-y-auto">
-                <div className="mb-6">
-                    <p className="px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Overview</p>
-                    <NavItem to="/" icon={LayoutDashboard} label="Dashboard" />
-                    <NavItem to="/tasks" icon={CheckSquare} label="My Tasks" />
+            <aside className={`
+                fixed md:sticky top-0 left-0 z-30 h-screen w-64 bg-slate-900 text-white flex flex-col transition-transform duration-300 ease-in-out
+                ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+            `}>
+                <div className="p-6 border-b border-slate-800 flex justify-between items-center">
+                    <h1 className="text-xl font-bold flex items-center gap-2">
+                        <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">S</div>
+                        STWMS
+                    </h1>
+                    <button onClick={onClose} className="md:hidden text-slate-400 hover:text-white">
+                        <X size={24} />
+                    </button>
                 </div>
 
-                {isManager && (
+                <div className="flex-1 px-4 py-6 overflow-y-auto">
                     <div className="mb-6">
-                        <p className="px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Management</p>
-                        <NavItem to="/tasks/manage" icon={Settings} label="Manage Tasks" />
-                        <NavItem to="/analytics" icon={BarChart3} label="Analytics" />
+                        <p className="px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Overview</p>
+                        <NavItem to="/" icon={LayoutDashboard} label="Dashboard" />
+                        <NavItem to="/tasks" icon={CheckSquare} label="My Tasks" />
                     </div>
-                )}
 
-                {isAdmin && (
-                    <div className="mb-6">
-                        <p className="px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Admin</p>
-                        <NavItem to="/admin/users" icon={Users} label="Users & Teams" />
-                        <NavItem to="/admin/audit" icon={FileText} label="Audit Logs" />
-                    </div>
-                )}
-            </div>
+                    {isManager && (
+                        <div className="mb-6">
+                            <p className="px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Management</p>
+                            <NavItem to="/tasks/manage" icon={Settings} label="Manage Tasks" />
+                            <NavItem to="/analytics" icon={BarChart3} label="Analytics" />
+                        </div>
+                    )}
 
-            <div className="p-4 border-t border-slate-800">
-                <div className="flex items-center gap-3 px-4 py-2">
-                    <div className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-sm font-bold">
-                        {user.username.charAt(0).toUpperCase()}
-                    </div>
-                    <div className="overflow-hidden">
-                        <p className="text-sm font-medium truncate">{user.username}</p>
-                        <p className="text-xs text-slate-500 truncate">{user.email}</p>
+                    {isAdmin && (
+                        <div className="mb-6">
+                            <p className="px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Admin</p>
+                            <NavItem to="/admin/users" icon={Users} label="Users & Teams" />
+                            <NavItem to="/admin/audit" icon={FileText} label="Audit Logs" />
+                        </div>
+                    )}
+                </div>
+
+                <div className="p-4 border-t border-slate-800">
+                    <div className="flex items-center gap-3 px-4 py-2">
+                        <div className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-sm font-bold">
+                            {user.username.charAt(0).toUpperCase()}
+                        </div>
+                        <div className="overflow-hidden">
+                            <p className="text-sm font-medium truncate">{user.username}</p>
+                            <p className="text-xs text-slate-500 truncate">{user.email}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </aside>
+            </aside>
+        </>
     );
 };
 
